@@ -1,5 +1,3 @@
-# Matthijs Duhoux 6WeWi6
-
 temps = [18.5, 21, 19.8, 20, 22.3, 17.6]
 
 over = 0
