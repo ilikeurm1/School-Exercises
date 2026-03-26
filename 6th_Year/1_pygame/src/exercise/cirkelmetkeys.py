@@ -63,6 +63,8 @@ def main():
                 f"{color_idx} is not a valid idx please choose from 0-{len(colors) - 1}"
             )
 
+    print()
+
     # pygame initialization
     pg.init()
     screen = pg.display.set_mode((screen_w, screen_h))
