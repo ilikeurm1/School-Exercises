@@ -1,5 +1,3 @@
-# Matthijs Duhoux 6WeWi6
-
 import os
 import pygame as pg
 
