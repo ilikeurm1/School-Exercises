@@ -1,0 +1,8 @@
+.mypy_cache
+.venv
+__pycache__
+example
+test
+
+.python-version
+uv.lock

@@ -1,0 +1,9 @@
+[project]
+name = "Night-Fight"
+version = "0.1.0"
+description = "A stupid game about you versus a chud knight"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pygame>=2.6.1",
+]
