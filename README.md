@@ -1,16 +1,18 @@
-# Dodona Oefeningen
+# School Exercises
 
 ## What is this?
 
-This repository has all the answers to the exercises on Dodona.
+This repository contains pretty much all the code I've written for school purposes. A lot of what's in here is answers to questions on Dodona.
+
+## Dodona answers
 
 This is not supposed to be used as a way to get the answer. But as a way to learn what the program is supposed to do.
 
-## Do all the exercises have an answer, and do all answers work?
+### Do all the exercises have an answer, and do all answers work?
 
 Yes! All exercises have an answer, and all answers work. All answers have been tested and are working. The only reason an answer might not work is because the exercise has been updated and the answer has changed.
 
-## How do I use this?
+### How do I use this?
 
 Just look for the folder where your exercise is, find your exercise and look at the code! It really can't be easier than that.
 
