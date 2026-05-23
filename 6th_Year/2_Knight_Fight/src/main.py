@@ -300,7 +300,7 @@ def menu_screen(screen: pg.Surface, clock: pg.time.Clock) -> None:
 def game(
     screen: pg.surface, clock: pg.time.Clock, *, skip_intro: bool = False
 ) -> str:
-    FONT = get_game_font(18)
+    FONT = get_game_font(14)
 
     # Fps counter
     fps_counter = FPSCounter(
@@ -422,7 +422,7 @@ def end_screen(
 ) -> str:
     title_font = get_game_font(112)
     text_font = get_game_font(40)
-    body_font = get_game_font(32)
+    body_font = get_game_font(24)
 
     title = "VICTORY" if victory else "DEFEAT"
     title_color = (245, 245, 245) if victory else (255, 215, 215)
