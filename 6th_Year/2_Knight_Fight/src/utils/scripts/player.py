@@ -28,7 +28,6 @@ PLAYER_HEALTHBAR_SIZE: tuple[int, int]  = (72, 10)
 PLAYER_HEALTHBAR_OFFSET: int            = 6
 PLAYER_HIT_GRACE_DURATION: float        = 1.5
 PLAYER_DASH_TIMING_WINDOW: float        = 0.16
-DEBUG_HITBOXES: bool                    = True
 DASH_BAR_SIZE: tuple[int, int]          = (80, 5)
 DASH_BAR_BOTTOM_OFFSET: int             = 10
 DASH_BAR_LEFT_OFFSET: int               = 10
@@ -147,12 +146,10 @@ class Player:
 
     def take_damage(self, damage: float, *, source: str = "unknown") -> bool:
         if self.is_invincible:
-            print(f"[DMG] blocked source={source}")
             return False
 
         self.health = max(0.0, self.health - damage)
         self.i_timer = max(self.i_timer, PLAYER_HIT_GRACE_DURATION)
-        print(f"[DMG] player hit source={source} amount={damage:.1f} hp={self.health:.1f}/{self.max_health:.1f}")
         return True
 
     def _get_sprite_and_rect(self) -> tuple[pg.Surface, pg.Rect]:
@@ -300,8 +297,5 @@ class Player:
         self._draw_dash_bar()
         self._draw_invincibility_shield(sprite_rect)
         self.screen.blit(sprite, sprite_rect)
-
-        if DEBUG_HITBOXES:
-            pg.draw.rect(self.screen, (95, 255, 170), self.damage_hurtbox, 1)
 
         self._draw_healthbar(sprite_rect)

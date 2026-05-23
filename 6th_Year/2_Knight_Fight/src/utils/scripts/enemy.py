@@ -69,8 +69,6 @@ ENEMY_PHASE_TWO_HEAL_RATIO: float        = 0.9
 ENEMY_PHASE_TWO_DIZZY_CHANCE: float      = 0.80
 ENEMY_PHASE_TWO_DIZZY_DURATION: float    = 2.8
 
-DEBUG_HITBOXES: bool = True
-
 
 class Enemy:
     # States
@@ -232,7 +230,6 @@ class Enemy:
 
             if fireball.hit_rect.colliderect(player_rect):
                 if fireball.is_barrage and player_dash_timing:
-                    print("[DMG] blocked source=barrage-perfect-dodge")
                     continue
 
                 if fireball.damage >= damage:
@@ -314,7 +311,6 @@ class Enemy:
                 )
                 fireballs_to_spawn.append((self.phase_two_telegraph_duration, fireball))
 
-            print(f"[DBG] barrage scheduled angle={angle:.1f} count={ENEMY_BARRAGE_COUNT}")
         else:
             safe_width = 140.0
             safe_x = random.uniform(safe_width / 2 + 30, WIDTH - safe_width / 2 - 30)
@@ -597,7 +593,6 @@ class Enemy:
             random.choice(self.hit_sounds).play()
 
         self.health = next_health
-        print(f"[DMG] wizard hit amount={dealt_damage:.1f} hp={self.health:.1f}/{self.max_health:.1f}")
 
         if is_transform_hit:
             self.phase_count = 2
@@ -650,5 +645,3 @@ class Enemy:
 
         for fireball in self.fireballs:
             draw_fireball(self.screen, fireball, self.fireball_sprite)
-            if DEBUG_HITBOXES:
-                pg.draw.rect(self.screen, (255, 120, 120), fireball.hit_rect, 1)
