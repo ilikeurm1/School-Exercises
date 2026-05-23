@@ -300,7 +300,7 @@ def menu_screen(screen: pg.Surface, clock: pg.time.Clock) -> None:
 def game(
     screen: pg.surface, clock: pg.time.Clock, *, skip_intro: bool = False
 ) -> str:
-    FONT = get_game_font(14)
+    FONT = get_game_font(16)
 
     # Fps counter
     fps_counter = FPSCounter(
@@ -308,7 +308,7 @@ def game(
         FONT,
         clock,
         (255, 255, 255),
-        (5, 5, 40, 18),
+        (10, 5, 55, 18),
     )
 
     # region variables
