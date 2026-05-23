@@ -58,14 +58,13 @@ ENEMY_TRANSFORM_DURATION: float          = 3.0
 ENEMY_SLASH_SPEED: float                 = 540.0
 ENEMY_LASER_COOLDOWN: float              = 4.0           # seconds between lasers
 ENEMY_LASER_WARNING_DURATION: float      = 0.7
-ENEMY_LASER_ACTIVE_DURATION: float       = 0.55
+ENEMY_LASER_ACTIVE_DURATION: float       = 0.3
 # ── Phase 2 ──────────────────────────────────────────────────────────────────
 ENEMY_FIREBALL_SPEED: float              = 420.0
 ENEMY_FIREBALL_TELEGRAPH_DURATION: float = 0.85
 ENEMY_BARRAGE_TELEGRAPH_DURATION: float  = 1.0
 ENEMY_BARRAGE_COUNT: int                 = 32
 ENEMY_PHASE_TWO_COOLDOWN: float          = 3.4           # seconds between attacks
-ENEMY_PHASE_TWO_HEAL_RATIO: float        = 0.9
 ENEMY_PHASE_TWO_DIZZY_CHANCE: float      = 0.80
 ENEMY_PHASE_TWO_DIZZY_DURATION: float    = 2.8
 
@@ -349,7 +348,7 @@ class Enemy:
             return 0.0
 
         self.phase_two_cooldown -= dt
-        if self.phase_two_cooldown <= 0.0 and self.phase_two_telegraph_timer <= 0.0 and not self.pending_fireballs:
+        if self.phase_two_cooldown <= 0.0 and self.phase_two_telegraph_timer <= 0.0 and not self.pending_fireballs and not self._phase_two_dizzy_pending:
             self._schedule_phase_two_attack()
             self.phase_two_cooldown = random.uniform(ENEMY_PHASE_TWO_COOLDOWN * 0.75, ENEMY_PHASE_TWO_COOLDOWN * 1.25)
             if self.phase_two_is_barrage:
@@ -547,7 +546,7 @@ class Enemy:
             self.transform_timer += dt
             self._move_toward_home(dt)
             transform_progress = min(1.0, self.transform_timer / ENEMY_TRANSFORM_DURATION)
-            heal_target = self.max_health * ENEMY_PHASE_TWO_HEAL_RATIO
+            heal_target = self.max_health
             self.health = self.transform_start_health + (heal_target - self.transform_start_health) * transform_progress
             if self.transform_timer >= ENEMY_TRANSFORM_DURATION:
                 self.transform_timer = ENEMY_TRANSFORM_DURATION
@@ -578,8 +577,8 @@ class Enemy:
         if not attack_rect.colliderect(self.hurtbox):
             return False
 
-        # 10% chance to crit dmg * [1.5, 3.0]
-        dealt_damage = damage if random.random() >= 0.1 else damage * (1.5 + random.random() * 1.5)
+        # damage (10% chance to crit dmg * [1.5, 2.0])
+        dealt_damage = damage if random.random() > 0.1 else damage * (1.5 + random.random() * .5)
         next_health = max(0.0, self.health - dealt_damage)
         is_transform_hit = (
             self.phase_count == 1
@@ -600,7 +599,7 @@ class Enemy:
             self.state_timer = 0.0
             self.transform_timer = 0.0
             self.transform_start_health = self.health
-            self.phase_two_cooldown = random.uniform(ENEMY_PHASE_TWO_COOLDOWN * 0.75, ENEMY_PHASE_TWO_COOLDOWN * 1.25)
+            self.phase_two_cooldown = ENEMY_PHASE_TWO_COOLDOWN
             self.phase_two_telegraph_timer = 0.0
             self.phase_two_attack_was_active = False
             self._phase_two_dizzy_pending = False
